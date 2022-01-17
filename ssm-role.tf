@@ -22,6 +22,6 @@ resource "aws_iam_role_policy_attachment" "ssmcore-attach-cwatch" {
 
 #Instance Profile
 resource "aws_iam_instance_profile" "ssm-profile" {
-  name = format("%s-ssm-profile1", var.Customer)
+  name = format("%s-ssm-profile", var.Customer)
   role = aws_iam_role.ssm-core-role.name
 }
