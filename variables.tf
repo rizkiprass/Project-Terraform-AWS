@@ -6,7 +6,7 @@ variable "aws_region" {
 
 // Tag
 variable "Birthday" {
-  default = "27-12-2021"
+  default = "26-01-2022"
 }
 
 variable "Backup" {
@@ -47,7 +47,7 @@ variable "Data_Subnet_AZ2" {
 #ami
 
 variable "ami-ubuntu" {
-  default = "ami-0fb653ca2d3203ac1"
+  default = "ami-04505e74c0741db8d"
 }
 
 variable "ami-linux2" {

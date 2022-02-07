@@ -1,11 +1,11 @@
 //Server Prod-App
 resource "aws_instance" "prod-app" {
-  ami                  = var.ami-linux2
-  instance_type        = "t2.small"
+  ami                         = var.ami-ubuntu
+  instance_type               = "t2.micro"
   associate_public_ip_address = "false"
-  key_name             = var.key-sandbox-prod-app
-  subnet_id            = aws_subnet.subnet-app-1a.id
-  iam_instance_profile = aws_iam_instance_profile.ssm-profile.name
+  key_name                    = "key-sandbox"
+  subnet_id                   = aws_subnet.subnet-app-1a.id
+  iam_instance_profile        = aws_iam_instance_profile.ssm-profile.name
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
@@ -18,12 +18,12 @@ resource "aws_instance" "prod-app" {
     encrypted             = true
     delete_on_termination = true
     tags = merge(local.common_tags, {
-    Name = format("%s-%s-app-ebs", var.Customer, var.environment)
-  })
-}
+      Name = format("%s-%s-app-ebs", var.Customer, var.environment)
+    })
+  }
 
   tags = merge(local.common_tags, {
-    Name                = format("%s-%s-App", var.Customer, var.environment),
+    Name                = format("%s-%s-App-rpras", var.Customer, var.environment),
     start-stop-schedule = false,
     OS                  = "Ubuntu",
     Backup              = "DailyBackup" # TODO: Set Backup Rules
@@ -32,12 +32,12 @@ resource "aws_instance" "prod-app" {
 
 //Server Dev-App
 resource "aws_instance" "dev-app" {
-  ami                  = var.ami-linux2
-  instance_type        = "t2.small"
+  ami                         = var.ami-ubuntu
+  instance_type               = "t2.micro"
   associate_public_ip_address = "false"
-  key_name             = var.key-sandbox-dev-app
-  subnet_id            = aws_subnet.subnet-app-1a.id
-  iam_instance_profile = aws_iam_instance_profile.ssm-profile.name
+  key_name                    = "key-sandbox"
+  subnet_id                   = aws_subnet.subnet-app-1a.id
+  iam_instance_profile        = aws_iam_instance_profile.ssm-profile.name
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
@@ -50,12 +50,12 @@ resource "aws_instance" "dev-app" {
     encrypted             = true
     delete_on_termination = true
     tags = merge(local.common_tags, {
-    Name = format("%s-dev-app", var.Customer)
-  })
-}
+      Name = format("%s-dev-app", var.Customer)
+    })
+  }
 
   tags = merge(local.common_tags_dev, {
-    Name                = format("%s-dev-App", var.Customer),
+    Name                = format("%s-dev-App-rpras", var.Customer),
     start-stop-schedule = false,
     OS                  = "Ubuntu",
     Backup              = "DailyBackup" # TODO: Set Backup Rules
@@ -64,12 +64,12 @@ resource "aws_instance" "dev-app" {
 
 //Server Prod-Data
 resource "aws_instance" "Prod-Data" {
-  ami                  = var.ami-linux2
-  instance_type        = "t2.small"
+  ami                         = var.ami-ubuntu
+  instance_type               = "t2.micro"
   associate_public_ip_address = "false"
-  key_name             = var.key-sandbox-data
-  subnet_id            = aws_subnet.subnet-data-1a.id
-  iam_instance_profile = aws_iam_instance_profile.ssm-profile.name
+  key_name                    = "key-sandbox"
+  subnet_id                   = aws_subnet.subnet-data-1a.id
+  iam_instance_profile        = aws_iam_instance_profile.ssm-profile.name
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
@@ -82,12 +82,12 @@ resource "aws_instance" "Prod-Data" {
     encrypted             = true
     delete_on_termination = true
     tags = merge(local.common_tags, {
-    Name = format("%s-%s-data", var.Customer, var.environment)
-  })
-}
+      Name = format("%s-%s-data", var.Customer, var.environment)
+    })
+  }
 
   tags = merge(local.common_tags, {
-    Name                = format("%s-%s-Data", var.Customer, var.environment),
+    Name                = format("%s-%s-Data-rpras", var.Customer, var.environment),
     start-stop-schedule = false,
     OS                  = "Ubuntu",
     Backup              = "DailyBackup" # TODO: Set Backup Rules
@@ -107,9 +107,9 @@ output "openvpn-eip" {
   value = aws_eip.openvpn-nat.public_ip
 }
 resource "aws_instance" "openvpn" {
-  ami                  = var.ami-linux2
-  instance_type        = "t3.small"
-  key_name             = "key-Sandbox-openvpn"
+  ami                  = var.ami-ubuntu
+  instance_type        = "t2.micro"
+  key_name             = "key-sandbox"
   subnet_id            = aws_subnet.subnet-public-1a.id
   iam_instance_profile = aws_iam_instance_profile.ssm-profile.name
   metadata_options {
@@ -130,7 +130,7 @@ resource "aws_instance" "openvpn" {
     })
   }
   tags = merge(local.common_tags, {
-    Name                = format("%s-%s-openvpn", var.project, var.environment),
+    Name                = format("%s-%s-openvpn-rpras", var.project, var.environment),
     start-stop-schedule = false,
     Backup              = "MonthlyBackup"
   })

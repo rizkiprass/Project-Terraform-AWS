@@ -87,7 +87,7 @@ resource "aws_security_group" "Prod-App-sg" {
 
 //Dev-App-sg
 resource "aws_security_group" "Dev-App-sg" {
-  name = format("%s-dev-vectrkdev-jkt01-sg", var.Customer)
+  name = format("%s-dev-App-sg", var.Customer)
   description = format("%s-dev-App-sg", var.Customer)
   vpc_id = aws_vpc.vpc.id
   ingress {
